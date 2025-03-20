@@ -56,8 +56,10 @@ export const getApiCity = async (request, reply) => {
       }
   
       const weatherData = await weatherResponse.json();
-      const weatherPredictions = weatherData.map((day, index) => ({
-        when: index === 0 ? "today" : "tomorrow",
+  
+      // Adapter la structure des données météo
+      const weatherPredictions = weatherData[0].predictions.map((day) => ({
+        when: day.when,
         min: day.min,
         max: day.max,
       }));
@@ -79,4 +81,4 @@ export const getApiCity = async (request, reply) => {
     } catch (error) {
       return reply.status(500).send({ error: "Internal Server Error" });
     }
-  };  
+  };
