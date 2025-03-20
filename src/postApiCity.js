@@ -39,13 +39,9 @@ export const postApiCityRecipe = async (request, reply) => {
         .send({ error: "Content must be less than 2000 characters long" });
     }
 
-    // 🔹 3. Générer un ID unique pour la recette
-    const generateUniqueId = () => {
-      return recipesDB.length + 1; // Générer un ID unique basé sur la taille actuelle de recipesDB
-    };
-
+    // 🔹 3. Ajouter la recette en mémoire avec un ID unique
     const newRecipe = {
-      id: generateUniqueId(), // ID unique sous forme d'entier
+      id: recipesDB.length + 1, // ID unique sous forme d'entier
       cityId,
       content,
     };
@@ -64,6 +60,7 @@ export const postApiCityRecipe = async (request, reply) => {
     return reply.status(500).send({ error: "Internal Server Error" });
   }
 };
+
 
 
 
