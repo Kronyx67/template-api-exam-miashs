@@ -1,4 +1,6 @@
-const CITY_API_KEY = process.env.API_KEY;
+import { v4 as uuidv4 } from 'uuid';  // Importer pour générer des UUIDs uniques
+
+const CITY_API_KEY = 'm_KL1335y';
 let recipesDB = []; // Stockage en mémoire des recettes
 
 export const postApiCityRecipe = async (request, reply) => {
@@ -12,7 +14,11 @@ export const postApiCityRecipe = async (request, reply) => {
     );
 
     if (!cityResponse.ok) {
-      return reply.status(404).send({ error: "City not found" });
+      // Log détaillé en cas d'échec
+      const errorDetails = await cityResponse.text();
+      console.error("City API error:", errorDetails);
+
+      return reply.status(404).send({ error: `City not found: ${cityId}` });
     }
 
     // 🔹 2. Vérifier le contenu de la recette
@@ -30,9 +36,9 @@ export const postApiCityRecipe = async (request, reply) => {
         .send({ error: "Content must be less than 2000 characters long" });
     }
 
-    // 🔹 3. Ajouter la recette en mémoire
+    // 🔹 3. Ajouter la recette en mémoire avec un ID unique
     const newRecipe = {
-      id: recipesDB.length + 1, // Générer un ID unique
+      id: uuidv4(), // Utilisation d'un UUID pour générer un ID unique
       cityId,
       content,
     };
@@ -45,6 +51,9 @@ export const postApiCityRecipe = async (request, reply) => {
       content: newRecipe.content,
     });
   } catch (error) {
+    // Log détaillé des erreurs internes
+    console.error("Internal Server Error:", error);
+
     return reply.status(500).send({ error: "Internal Server Error" });
   }
 };
