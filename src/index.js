@@ -3,6 +3,7 @@ import Fastify from 'fastify'
 import { submitForReview } from './submission.js'
 import { getApiCity } from "./getApiCity.js";
 import { postApiCityRecipe } from "./postApiCity.js";
+import { deleteApiCityRecipe } from "./deleteApiCityRecipe.js";
 
 const fastify = Fastify({
   logger: true,
@@ -10,7 +11,7 @@ const fastify = Fastify({
 
 fastify.get("/cities/:cityId/infos", getApiCity);
 fastify.post("/cities/:cityId/recipes", postApiCityRecipe);
-
+fastify.delete("/cities/:cityId/recipes/:recipeId", deleteApiCityRecipe);
 
 fastify.listen(
   {
