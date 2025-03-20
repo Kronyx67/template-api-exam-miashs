@@ -8,7 +8,12 @@ export const postApiCityRecipe = async (request, reply) => {
 
     // 🔹 1. Vérifier si la ville existe via City API
     const cityResponse = await fetch(
-      `https://api-ugi2pflmha-ew.a.run.app/cities/${cityId}?apiKey=${CITY_API_KEY}`
+      `https://api-ugi2pflmha-ew.a.run.app/cities/${cityId}?apiKey=${CITY_API_KEY}`,
+      {
+        headers: {
+          Accept: 'application/json', // Demander des données JSON
+        },
+      }
     );
 
     if (!cityResponse.ok) {
@@ -34,13 +39,13 @@ export const postApiCityRecipe = async (request, reply) => {
         .send({ error: "Content must be less than 2000 characters long" });
     }
 
-    // 🔹 3. Générer un ID unique pour la recette (en utilisant Date.now et un nombre aléatoire)
+    // 🔹 3. Générer un ID unique pour la recette
     const generateUniqueId = () => {
-      return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+      return recipesDB.length + 1; // Générer un ID unique basé sur la taille actuelle de recipesDB
     };
 
     const newRecipe = {
-      id: generateUniqueId(), // Générer un ID unique sans module
+      id: generateUniqueId(), // ID unique sous forme d'entier
       cityId,
       content,
     };
@@ -49,8 +54,8 @@ export const postApiCityRecipe = async (request, reply) => {
 
     // 🔹 4. Retourner la réponse avec status 201
     return reply.status(201).send({
-      id: newRecipe.id,
-      content: newRecipe.content,
+      id: newRecipe.id,   // Identifiant unique de la recette
+      content: newRecipe.content, // Le contenu de la recette
     });
   } catch (error) {
     // Log détaillé des erreurs internes
@@ -59,4 +64,6 @@ export const postApiCityRecipe = async (request, reply) => {
     return reply.status(500).send({ error: "Internal Server Error" });
   }
 };
+
+
 
