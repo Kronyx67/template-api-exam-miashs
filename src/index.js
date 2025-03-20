@@ -1,7 +1,8 @@
 import 'dotenv/config'
 import Fastify from 'fastify'
 import { submitForReview } from './submission.js'
-import { getCityInfo } from "./getApiCity.js";
+import { getApiCity } from "./getApiCity.js";
+import { postApiCityRecipe } from "./postApiCity.js";
 
 const fastify = Fastify({
   logger: true,

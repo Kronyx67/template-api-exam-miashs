@@ -1,4 +1,4 @@
-const CITY_API_KEY = process.env.CITY_API_KEY;
+const CITY_API_KEY = process.env.API_KEY;
 let recipesDB = []; // Stockage en mémoire des recettes
 
 export const postApiCityRecipe = async (request, reply) => {
