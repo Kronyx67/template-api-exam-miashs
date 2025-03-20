@@ -1,8 +1,7 @@
-/**
- * Récupère les informations d'une ville depuis City API.
- * @param {string} cityId - L'ID de la ville.
- * @returns {object} - Les informations formatées de la ville.
- */
+import fetch from "node-fetch";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const CITY_API_KEY = process.env.API_KEY;
 const WEATHER_API_KEY = process.env.API_KEY;
