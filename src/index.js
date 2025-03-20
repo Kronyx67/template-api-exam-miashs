@@ -7,19 +7,9 @@ const fastify = Fastify({
   logger: true,
 })
 
-// Route GET /cities/:cityId/infos
-fastify.get("/cities/:cityId/infos", async (request, reply) => {
-  try {
-    const { cityId } = request.params;
-    const cityInfo = await getCityInfo(cityId);
-    return reply.send(cityInfo);
-  } catch (error) {
-    if (error.message === "City not found") {
-      return reply.status(404).send({ error: "City not found" });
-    }
-    return reply.status(500).send({ error: "Internal Server Error" });
-  }
-});
+fastify.get("/cities/:cityId/infos", getApiCity);
+fastify.post("/cities/:cityId/recipes", postApiCityRecipe);
+
 
 fastify.listen(
   {
