@@ -14,6 +14,8 @@ export const getApiCity = async (request, reply) => {
         const { cityId } = request.params;
         
         // 🔹 1. Requête vers City API pour obtenir l'ID de la ville
+
+        console.log(`Searching for city: ${cityId}`);
         const citySearchResponse = await fetch(
             `https://api-ugi2pflmha-ew.a.run.app/cities?search=${cityId}&apiKey=${CITY_API_KEY}`,
             {
@@ -24,6 +26,7 @@ export const getApiCity = async (request, reply) => {
         );
   
         if (!citySearchResponse.ok) {
+            console.log(`City search failed with status: ${citySearchResponse.status}`);
             return reply.status(404).send({ error: "City not found" });
         }
   
