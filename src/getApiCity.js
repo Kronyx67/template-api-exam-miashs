@@ -92,7 +92,7 @@ export const getApiCity = async (request, reply) => {
             population: cityData.population || 0,  // Si la population est manquante, retourner 0
             knownFor: cityData.knownFor || [],  // Si la liste "knownFor" est manquante, retourner un tableau vide
             weatherPredictions,  // Prévisions météo
-            //recipes: cityRecipes,  // Recettes associées à la ville
+            recipes: [],  // Recettes associées à la ville
         });
     } catch (error) {
         console.error("Internal Server Error:", error);
