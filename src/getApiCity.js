@@ -5,7 +5,7 @@
  */
 
 const CITY_API_KEY = process.env.API_KEY;
-
+const WEATHER_API_KEY = process.env.API_KEY;
 /**
  * Récupère les informations d'une ville depuis City API et Weather API.
  * @param {string} cityId - L'ID de la ville.
@@ -67,7 +67,10 @@ export const getApiCity = async (request, reply) => {
   
       // 🔹 5. Retourner la réponse formatée
       return reply.send({
-        coordinates: cityData.coordinates, // [lat, lon]
+        coordinates: [
+          cityData.coordinates.latitude,  // Récupérer latitude de l'objet
+          cityData.coordinates.longitude, // Récupérer longitude de l'objet
+        ],
         population: cityData.population,
         knownFor: cityData.knownFor || [],
         weatherPredictions,
@@ -76,4 +79,4 @@ export const getApiCity = async (request, reply) => {
     } catch (error) {
       return reply.status(500).send({ error: "Internal Server Error" });
     }
-  };
+  };  
