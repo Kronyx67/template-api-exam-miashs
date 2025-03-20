@@ -18,7 +18,7 @@ export const getApiCity = async (request, reply) => {
             `https://api-ugi2pflmha-ew.a.run.app/cities?search=${cityId}&apiKey=${CITY_API_KEY}`,
             {
                 headers: {
-                    'Accept': 'application/json' // Ajout du header pour obtenir des données JSON
+                    Accept: 'application/json' // Ajout du header pour obtenir des données JSON
                 }
             }
         );
@@ -43,7 +43,7 @@ export const getApiCity = async (request, reply) => {
             `https://api-ugi2pflmha-ew.a.run.app/cities/${cityUniqueId}/insights?apiKey=${CITY_API_KEY}`,
             {
                 headers: {
-                    'Accept': 'application/json' // Ajout du header pour obtenir des données JSON
+                    Accept: 'application/json' // Ajout du header pour obtenir des données JSON
                 }
             }
         );
@@ -59,7 +59,7 @@ export const getApiCity = async (request, reply) => {
             `https://api-ugi2pflmha-ew.a.run.app/weather-predictions?cityId=${cityUniqueId}&apiKey=${WEATHER_API_KEY}`,
             {
                 headers: {
-                    'Accept': 'application/json' // Ajout du header pour obtenir des données JSON
+                    Accept: 'application/json' // Ajout du header pour obtenir des données JSON
                 }
             }
         );
