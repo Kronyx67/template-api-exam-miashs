@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';  // Importer pour générer des UUIDs uniques
-
 const CITY_API_KEY = 'm_KL1335y';
 let recipesDB = []; // Stockage en mémoire des recettes
 
@@ -36,9 +34,13 @@ export const postApiCityRecipe = async (request, reply) => {
         .send({ error: "Content must be less than 2000 characters long" });
     }
 
-    // 🔹 3. Ajouter la recette en mémoire avec un ID unique
+    // 🔹 3. Générer un ID unique pour la recette (en utilisant Date.now et un nombre aléatoire)
+    const generateUniqueId = () => {
+      return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    };
+
     const newRecipe = {
-      id: uuidv4(), // Utilisation d'un UUID pour générer un ID unique
+      id: generateUniqueId(), // Générer un ID unique sans module
       cityId,
       content,
     };
@@ -57,3 +59,4 @@ export const postApiCityRecipe = async (request, reply) => {
     return reply.status(500).send({ error: "Internal Server Error" });
   }
 };
+
