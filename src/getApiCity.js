@@ -56,27 +56,28 @@ export const getApiCity = async (request, reply) => {
       const weatherData = await weatherResponse.json();
   
       // Adapter la structure des données météo
-      const weatherPredictions = weatherData[0].predictions.map((day) => ({
+      const weatherPredictions = weatherData[0]?.predictions?.map((day) => ({
         when: day.when,
         min: day.min,
         max: day.max,
-      }));
+      })) || [];
   
       // 🔹 4. Filtrer les recettes pour cette ville
       const cityRecipes = recipesDB.filter((recipe) => recipe.cityId === cityId);
   
       // 🔹 5. Retourner la réponse formatée
       return reply.send({
-        coordinates: [
+        coordinates: cityData.coordinates ? [
           cityData.coordinates.latitude,  // Récupérer latitude de l'objet
           cityData.coordinates.longitude, // Récupérer longitude de l'objet
-        ],
-        population: cityData.population,
-        knownFor: cityData.knownFor || [],
-        weatherPredictions,
-        recipes: cityRecipes,
+        ] : [],  // Si les coordonnées sont manquantes, retourner un tableau vide
+        population: cityData.population || 0,  // Si la population est manquante, retourner 0
+        knownFor: cityData.knownFor || [],  // Si la liste "knownFor" est manquante, retourner un tableau vide
+        weatherPredictions,  // Prévisions météo
+        recipes: cityRecipes,  // Recettes associées à la ville
       });
     } catch (error) {
+      console.error("Internal Server Error:", error);
       return reply.status(500).send({ error: "Internal Server Error" });
     }
   };
